@@ -36,7 +36,7 @@ RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
 RUN chmod 755 /root && chmod 700 /root/.ssh
 RUN passwd --unlock root
 
-# Step 9: Download hadoop-3.3.6 and extract tar.gz
+# Step 6: Download hadoop-3.3.6 and extract tar.gz
 
 RUN wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz 
 RUN tar -xvzf hadoop-3.3.6.tar.gz
@@ -45,7 +45,7 @@ RUN ln -sf /hadoop-3.3.6 /hadoop
 RUN  apt-get -y clean all && rm -rf /tmp/* /var/tmp/* 
 
 
-# Step 10: Copy configuration files and bootstrap script
+# Step 7: Copy configuration files and bootstrap script
 RUN mkdir /conf
 COPY core-site.xml /conf/core-site.xml
 COPY hdfs-site.xml /conf/hdfs-site.xml
@@ -53,14 +53,14 @@ COPY hadoop-env.sh /conf/hadoop-env.sh
 
 COPY bootstrap.sh /bootstrap.sh
 
-# Step 11: Create Users
+# Step 8: Create Users
 
 RUN sudo addgroup hadoop
 RUN sudo adduser --ingroup hadoop hadoop
 
 
 # HDFS ports
-EXPOSE 1004 1006 8020 9866 9867 9870 9864 50470 9000 50070
+EXPOSE 1004 1006 8020 9866 9867 9870 9864 50470 9000 50070 9870
 
 # YARN ports
 EXPOSE 8030 8031 8032 8033 8040 8041 8042 8088 10020 19888
@@ -72,3 +72,5 @@ EXPOSE 1180
 
 # HDFS datnode
 EXPOSE 9866
+
+

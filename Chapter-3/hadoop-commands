@@ -1,0 +1,74 @@
+ $HADOOP_HOME/bin/hdfs dfs -ls /
+
+ $HADOOP_HOME/bin/hdfs dfs -mkdir /chapter-3
+
+$HADOOP_HOME/bin/hdfs dfs -ls /
+Found 1 items
+drwxr-xr-x   - root supergroup          0 2023-09-12 19:21 /chapter-3
+
+ $HADOOP_HOME/bin/hdfs dfs -chmod 777  /chapter-3
+
+$HADOOP_HOME/bin/hdfs dfs -ls /
+Found 1 items
+drwxrwxrwx   - root supergroup          0 2023-09-12 19:21 /chapter-3
+
+ $HADOOP_HOME/bin/hdfs dfs -put /conf/hdfs-site.xml /chapter-3/conf.xml
+
+
+ $HADOOP_HOME/bin/hdfs dfs -ls /chapter-3
+Found 1 items
+-rw-r--r--   1 root supergroup        978 2023-09-12 19:29 /chapter-3/conf.xml
+
+ $HADOOP_HOME/bin/hdfs dfs -cat /chapter-3/conf.xml
+..... file output.....
+
+
+
+
+ $HADOOP_HOME/bin/hdfs dfs -rm /chapter-3/conf.xml
+Deleted /chapter-3/conf.xml
+
+Output: 
+
+ root@localhost:/# $HADOOP_HOME/bin/hdfs dfs -cat /chapter-3/conf.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>dfs.permissions.enabled</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>dfs.datanode.address</name>
+        <value>0.0.0.0:9866</value>
+    </property>
+        <!--
+        To by pass
+        Service org.apache.tez.dag.app.DAGAppMaster failed in state INITED; cause: java.lang.NumberFormatException: For input string: “30s”
+        -->
+    <property>
+        <name>dfs.client.datanode-restart.timeout</name>
+        <value>30</value>
+    </property>
+
+    <property>
+        <description>To enable RM web ui2 application.</description>
+        <name>yarn.webapp.ui2.enable</name>
+        <value>true</value>
+     </property>
+
+
+
+
+$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.*.jar \
+-files mapper.py,reducer.py \
+-mapper mapper.py \
+-reducer reducer.py \
+-input input_data.txt \  # Replace with your input file(s)
+-output wordcount_output  # Specify the output directory
