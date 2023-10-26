@@ -1,0 +1,1 @@
+docker exec -it analytics-with-hadoop-tez   "/bin/bash"
