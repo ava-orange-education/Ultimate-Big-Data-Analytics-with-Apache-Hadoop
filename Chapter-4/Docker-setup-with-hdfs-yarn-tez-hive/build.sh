@@ -1,1 +1,1 @@
-docker build -t analytics-with-hadoop-tez ./
+docker build -t analytics-with-hadoop-hive ./

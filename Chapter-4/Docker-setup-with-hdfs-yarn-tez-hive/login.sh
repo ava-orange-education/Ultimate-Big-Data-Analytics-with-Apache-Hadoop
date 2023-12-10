@@ -1,1 +1,1 @@
-docker exec -it analytics-with-hadoop-tez   "/bin/bash"
+docker exec -it analytics-with-hadoop-hive   "/bin/bash"
